@@ -1,7 +1,7 @@
 //PROYECTO FINAL
 //LUIS ERNESTO ARBIZÚ MENA           CARNÉ  00206119
+//KARLA MARCELA PROTILLO RAMIREZ     CARNÉ  00079419
 //MARIELOS EUGENIA VELASCO PANIAGUA  CARNÉ  00230019
-//KARLA MARCELA PORTILLO RAMÍREZ     CARNÉ  00079419
 
 #include <iostream>
 #include <vector>
@@ -11,25 +11,25 @@ using namespace std;
 //Producto en Local
 struct ProLocal {
     string nombre;
-    string tipo;
+    //string tipo;
     float precio;
 };
 
 //Producto a Domicilio
 struct ProDomicilio {
     string nombre;
-    int dui;
-    string direccion;
-    string tipo;
+    //int dui;
+    //string direccion;
+    //string tipo;
     float precio_unitario;
 };
 
 //Producto en Envio
 struct ProEnvio {
     string nombre;
-    int dui;
-    string pais;
-    string tipo;
+    //int dui;
+    //string pais;
+    //string tipo;
     float precio_producto;
 };
 
@@ -121,7 +121,7 @@ float cobrar(queue<ClienteLocal> *colaClientes, float pago) {
 float cobrar2(queue<ClienteDomicilio> *colaClientes2, float pago) {
     //Verificación que haya clientes en la cola
     if(colaClientes2->empty()) {
-        cout << "No se ha realizado ningún cobro, no hay clientes" << endl;
+        cout << "No se ha realizado ningún cobro, no hay clientes para domicilio" << endl;
         return 0;
     }else {
         //Recorrer la cola por medio de un while, cuya condición sea que la cola NO esté vacía
@@ -151,7 +151,7 @@ float cobrar2(queue<ClienteDomicilio> *colaClientes2, float pago) {
 float cobrar3(queue<ClienteEnvio> *colaClientes3, float pago) {
     //Verificación que haya clientes en la cola
     if(colaClientes3->empty()) {
-        cout << "No se ha realizado ningún cobro, no hay clientes" << endl;
+        cout << "No se ha realizado ningún cobro, no hay clientes para envío" << endl;
         return 0;
     }else {
         //Recorrer la cola por medio de un while, cuya condición sea que la cola NO esté vacía
@@ -259,36 +259,37 @@ int main() {
                 //While ocupado para la inserción o eliminación de productos en la lista del cliente
                 while(status2) {
                     //Menú secundario para ingresar productos o eliminar
-                    cout << "*** Productos del cliente ***" << endl;
+                    cout <<"\n" << "*** Productos del cliente ***" << endl;
                     cout << "1. Agregar en lista para compras en Local" << endl;
                     cout << "2. Agregar en lista para compras a Domicilio" << endl;
                     cout << "3. Agregar en lista para compras Envio" << endl;
                     cout << "4. Eliminar producto por nombre" << endl;
                     cout << "5. Finalizar listado de productos" << endl;
-
+                 
                     //Declaración de variable para ingresar opción en el segundo menú
                     int option2;
 
                     //Pidiéndole al usuario que ingrese la opción a ejecutar del menú
-                    cout << "Ingrese la opción que desea ejecutar" << endl;
+                     cout << "\n" << "Ingrese la opción del menú que desea ejecutar: ";
                     cin >> option2;
                     cin.ignore();
 
                     switch(option2) {
                         case 1:
                             //Caso en el que se ingresa un nuevo producto y cliente
-                            cout << "Ingrese el nombre del cliente" << endl;
+                            cout << "\n" <<"Ingrese el nombre del cliente" << endl;
                             getline(cin, cliente.nombre);
 
                             cout << "Ingrese el dui del cliente" << endl;
                             cin >> cliente.dui;
-                            
+                            cin.ignore();
                             //Pidiéndole al usuario los datos para un producto
                             cout << "Ingrese el nombre del producto" << endl;
                             getline(cin, producto.nombre);
+                          
 
-                            cout << "Ingrese el tipo de producto" << endl;
-                            getline(cin, producto.tipo);
+                            //cout << "Ingrese el tipo de producto" << endl;
+                            //getline(cin, producto.tipo);
 
                             cout << "Ingrese el precio del producto" << endl;
                             cin >> producto.precio;
@@ -307,13 +308,14 @@ int main() {
                 
                             cout << "Ingrese el nombre del cliente" << endl;
                             getline(cin, cliente2.direccion);
+                            cin.ignore(); 
                             
                             //Pidiéndole al usuario los datos para un producto
                             cout << "Ingrese el nombre del producto" << endl;
                             getline(cin, producto2.nombre);
-
-                            cout << "Ingrese su dirección:" << endl;
-                            getline(cin, producto2.direccion);
+                            cin.ignore();
+                            //cout << "Ingrese su dirección:" << endl;
+                            //getline(cin, producto2.direccion);
                             
                             cout << "Ingrese el precio del producto" << endl;
                             cin >> producto2.precio_unitario;
@@ -324,7 +326,7 @@ int main() {
                             
                         case 3:
                             //Caso en el que se ingresa un nuevo producto para Envio
-                                cout << "Ingrese el nombre del cliente" << endl;
+                            cout << "Ingrese el nombre del cliente" << endl;
                             getline(cin, cliente3.nombre);
                     
                             cout << "Ingrese el dui del cliente" << endl;
@@ -337,8 +339,8 @@ int main() {
                             cout << "Ingrese el nombre del producto" << endl;
                             getline(cin, producto3.nombre);
 
-                            cout << "Ingrese el país de destino:" << endl;
-                            getline(cin, producto3.pais);
+                            //cout << "Ingrese el país de destino:" << endl;
+                            //getline(cin, producto3.pais);
                       
                             cout << "Ingrese el precio del producto" << endl;
                             cin >> producto3.precio_producto;
