@@ -192,6 +192,9 @@ int main() {
 
     //Creando bandera booleana para iterar el segundo while
     bool status2 = true;
+    
+    //Creando bandera booleana para iterar el segundo while
+    bool status3 = true;
 
     //Menu por medio de while, verificando variable status por cada iteración
     while(status) {
@@ -247,59 +250,10 @@ int main() {
         float totalPagadoEnvio = 0;
 
         //Case para verificar la opción ingresada
+        
         switch (option){
             case 1:
-                cout << "¿Desea comprar en  Local, Domicilio o Enviar un producto?" << endl;
-                cout << "Para Local ingresar 1" << endl;
-                cout << "Para Domicilio ingresar 2" << endl;
-                cout << "Para Envio ingresar 3" << endl;
-                int option3;
-
-                //Indicando a cuál cola ingresar
-                cout << "\n" << "Ingrese la opción del menú que desea ejecutar: ";
-                cin >> option3;
-                cin.ignore();
                 
-                switch (option3){    
-                
-                case 1:
-                    //Pidiéndole al usuario que ingrese los datos del clientes local
-                    cout << "Ingrese el nombre del cliente" << endl;
-                    getline(cin, cliente.nombre);
-
-                    cout << "Ingrese el dui del cliente" << endl;
-                    cin >> cliente.dui;
-                
-                break;
-               
-               case 2:
-                    //Pidiéndole al usuario que ingrese los datos del clientes a domicilio
-                    cout << "Ingrese el nombre del cliente" << endl;
-                    getline(cin, cliente2.nombre);
-                
-                    cout << "Ingrese el dui del cliente" << endl;
-                    cin >> cliente2.dui;
-                
-                    cout << "Ingrese el nombre del cliente" << endl;
-                    getline(cin, cliente2.direccion);
-                break;
-                
-               case 3: 
-                    //Pidiéndole al usuario que ingrese los datos del clientes para envios
-                    cout << "Ingrese el nombre del cliente" << endl;
-                    getline(cin, cliente3.nombre);
-                    
-                    cout << "Ingrese el dui del cliente" << endl;
-                    cin >> cliente3.dui;
-                
-                    cout << "Ingrese el nombre del cliente" << endl;
-                    getline(cin, cliente3.pais);
-                break;
-                
-                default:
-                    cout << "Opción no válida" << endl;
-                break;
-                }
                 
                 status2 = true;
                 //While ocupado para la inserción o eliminación de productos en la lista del cliente
@@ -322,8 +276,13 @@ int main() {
 
                     switch(option2) {
                         case 1:
-                            //Caso en el que se ingresa un nuevo producto
+                            //Caso en el que se ingresa un nuevo producto y cliente
+                            cout << "Ingrese el nombre del cliente" << endl;
+                            getline(cin, cliente.nombre);
 
+                            cout << "Ingrese el dui del cliente" << endl;
+                            cin >> cliente.dui;
+                            
                             //Pidiéndole al usuario los datos para un producto
                             cout << "Ingrese el nombre del producto" << endl;
                             getline(cin, producto.nombre);
@@ -340,7 +299,15 @@ int main() {
                             
                         case 2:
                             //Caso en el que se ingresa un nuevo producto para Domicilio
-
+                            cout << "Ingrese el nombre del cliente" << endl;
+                            getline(cin, cliente2.nombre);
+                
+                            cout << "Ingrese el dui del cliente" << endl;
+                            cin >> cliente2.dui;
+                
+                            cout << "Ingrese el nombre del cliente" << endl;
+                            getline(cin, cliente2.direccion);
+                            
                             //Pidiéndole al usuario los datos para un producto
                             cout << "Ingrese el nombre del producto" << endl;
                             getline(cin, producto2.nombre);
@@ -357,7 +324,15 @@ int main() {
                             
                         case 3:
                             //Caso en el que se ingresa un nuevo producto para Envio
-
+                                cout << "Ingrese el nombre del cliente" << endl;
+                            getline(cin, cliente3.nombre);
+                    
+                            cout << "Ingrese el dui del cliente" << endl;
+                            cin >> cliente3.dui;
+                
+                            cout << "Ingrese el nombre del cliente" << endl;
+                            getline(cin, cliente3.pais);
+                            
                             //Pidiéndole al usuario los datos para un producto
                             cout << "Ingrese el nombre del producto" << endl;
                             getline(cin, producto3.nombre);
