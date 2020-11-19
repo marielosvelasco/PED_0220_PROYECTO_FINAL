@@ -1,7 +1,7 @@
 //PROYECTO FINAL
 //LUIS ERNESTO ARBIZÚ MENA           CARNÉ  00206119
-//KARLA MARCELA PROTILLO RAMIREZ     CARNÉ  00079419
 //MARIELOS EUGENIA VELASCO PANIAGUA  CARNÉ  00230019
+//KARLA MARCELA PORTILLO RAMÍREZ     CARNÉ  00079419
 
 #include <iostream>
 #include <vector>
@@ -77,7 +77,7 @@ void borrarPorNombre(vector<ProLocal> *listaProductos, string name) {
                 //Se manda a llamar la función borrar, desde el primer elemento existente hasta el actual
                 listaProductos->erase(listaProductos->begin()+pos);
 
-                cout << "Se borró el producto correctamente" << endl;
+                cout << "Se borr"<<char(162)<<" el producto correctamente" << endl;
                 break;
             }
         }
@@ -93,7 +93,7 @@ void borrarPorNombre(vector<ProLocal> *listaProductos, string name) {
 float cobrar(queue<ClienteLocal> *colaClientes, float pago) {
     //Verificación que haya clientes en la cola
     if(colaClientes->empty()) {
-        cout << "No se ha realizado ningún cobro, no hay clientes en cola del local." << endl;
+        cout << "No se ha realizado ning"<<char(163)<<"n cobro, no hay clientes en cola del local." << endl;
         return 0;
     }else {
         //Recorrer la cola por medio de un while, cuya condición sea que la cola NO esté vacía
@@ -121,7 +121,7 @@ float cobrar(queue<ClienteLocal> *colaClientes, float pago) {
 float cobrar2(queue<ClienteDomicilio> *colaClientes2, float pago) {
     //Verificación que haya clientes en la cola
     if(colaClientes2->empty()) {
-        cout << "No se ha realizado ningún cobro, no hay clientes para domicilio" << endl;
+        cout << "No se ha realizado ning"<<char(163)<<"n cobro, no hay clientes para domicilio" << endl;
         return 0;
     }else {
         //Recorrer la cola por medio de un while, cuya condición sea que la cola NO esté vacía
@@ -131,7 +131,7 @@ float cobrar2(queue<ClienteDomicilio> *colaClientes2, float pago) {
 
             cout << "Factura de " << cliente2.nombre << "\t" << endl;
             cout << "Dui: " << cliente2.dui << "\t" << endl;
-            cout << "Dirección: " << cliente2.direccion << "\t" << endl;
+            cout << "Direcci"<<char(162)<<"n: " << cliente2.direccion << "\t" << endl;
             //Recorrer la lista de los productos del cliente actuales con un for
             for(int i = 0; i < cliente2.productos2.size(); i++) {
                 //Almacenar los valores de precio del producto en la posición i en la variable pago
@@ -151,7 +151,7 @@ float cobrar2(queue<ClienteDomicilio> *colaClientes2, float pago) {
 float cobrar3(queue<ClienteEnvio> *colaClientes3, float pago) {
     //Verificación que haya clientes en la cola
     if(colaClientes3->empty()) {
-        cout << "No se ha realizado ningún cobro, no hay clientes para envío" << endl;
+        cout << "No se ha realizado ning"<<char(163)<<"n cobro, no hay clientes para env"<<char(161)<<"o" << endl;
         return 0;
     }else {
         //Recorrer la cola por medio de un while, cuya condición sea que la cola NO esté vacía
@@ -161,7 +161,7 @@ float cobrar3(queue<ClienteEnvio> *colaClientes3, float pago) {
 
             cout << "Factura de " << cliente3.nombre << "\t" << endl;
             cout << "Dui: " << cliente3.dui << "\t" << endl;
-            cout << "País de envio: " << cliente3.pais << "\t" << endl;
+            cout << "Pa"<<char(161)<<"s de envio: " << cliente3.pais << "\t" << endl;
             //Recorrer la lista de los productos del cliente actuales con un for
             for(int i = 0; i < cliente3.productos3.size(); i++) {
                 //Almacenar los valores de precio del producto en la posición i en la variable pago
@@ -210,7 +210,7 @@ int main() {
         int option;
 
         //Pidiéndole al usuario que ingrese la opción por medio de consola
-        cout << "\n" << "Ingrese la opción del menú que desea ejecutar: ";
+        cout << "\n" << "Ingrese la opci"<<char(162)<<"n del men"<<char(163)<<" que desea ejecutar: ";
         cin >> option;
         cin.ignore();
 
@@ -270,7 +270,7 @@ int main() {
                     int option2;
 
                     //Pidiéndole al usuario que ingrese la opción a ejecutar del menú
-                     cout << "\n" << "Ingrese la opción del menú que desea ejecutar: ";
+                     cout << "\n" << "Ingrese la opci"<<char(162)<<"n del men"<<char(163)<<" que desea ejecutar: ";
                     cin >> option2;
                     cin.ignore();
 
@@ -307,7 +307,7 @@ int main() {
                             cin >> cliente2.dui;
                             cin.ignore();
                             
-                            cout << "Ingrese la dirección del cliente" << endl;
+                            cout << "Ingrese la direcci"<<char(162)<<"n del cliente" << endl;
                             getline(cin, cliente2.direccion);
                         
                             
@@ -334,7 +334,7 @@ int main() {
                             cin >> cliente3.dui;
                             cin.ignore();
                             
-                            cout << "Ingrese el país del cliente" << endl;
+                            cout << "Ingrese el pa"<<char(161)<<"s del cliente" << endl;
                             getline(cin, cliente3.pais);
                             
                             //Pidiéndole al usuario los datos para un producto
@@ -366,7 +366,7 @@ int main() {
                             status2 = false;
                             break;
                         default:
-                            cout << "Opción no válida" << endl;
+                            cout << "Opci"<<char(162)<<"n no v"<<char(160)<<"lida" << endl;
                             break;
                     }
                 }
@@ -426,7 +426,7 @@ int main() {
                 cout << "Fin del programa." << endl;
                 break;
             default:
-                cout << "Opción no válida" << endl;
+                cout << "Opci"<<char(162)<<"n no v"<<char(160)<<"lida" << endl;
                 break;
         }
     }
