@@ -1,7 +1,7 @@
-#PROYECTO FINAL
-#LUIS ERNESTO ARBIZÚ MENA           CARNÉ  00206119
-#KARLA MARCELA PROTILLO RAMIREZ     CARNÉ  00079419
-#MARIELOS EUGENIA VELASCO PANIAGUA  CARNÉ  00230019
+//PROYECTO FINAL
+//LUIS ERNESTO ARBIZÚ MENA           CARNÉ  00206119
+//KARLA MARCELA PROTILLO RAMIREZ     CARNÉ  00079419
+//MARIELOS EUGENIA VELASCO PANIAGUA  CARNÉ  00230019
 
 #include <iostream>
 #include <vector>
@@ -99,15 +99,15 @@ float cobrar(queue<ClienteLocal> *colaClientes, float pago) {
         //Recorrer la cola por medio de un while, cuya condición sea que la cola NO esté vacía
         while(!colaClientes->empty()) {
             //Asignar el cliente que se encuentra al frente de la cola a la variable cliente
-            Cliente cliente = colaClientes->front();
+            ClienteLocal cliente = colaClientes->front();
 
-            cout << "Factura de " << ClienteLocal.nombre << "\t" << "\t" << "DUI: " << ClienteLocal.dui << endl;
+            cout << "Factura de " << cliente.nombre << "\t" << "\t" << "DUI: " << cliente.dui << endl;
             //Recorrer la lista de los productos del cliente actuales con un for
-            for(int i = 0; i < ClienteLocal.productos.size(); i++) {
+            for(int i = 0; i < cliente.productos.size(); i++) {
                 //Almacenar los valores de precio del producto en la posición i en la variable pago
-                pago += ClienteLocal.productos.at(i).precio;
+                pago += cliente.productos.at(i).precio;
 
-                cout << ClienteLocal.productos.at(i).nombre << ": $" << ClienteLocal.productos.at(i).precio << endl;
+                cout << cliente.productos.at(i).nombre << ": $" << cliente.productos.at(i).precio << endl;
             }
 
             //Eliminar el cliente al frente de la cola 
@@ -129,7 +129,7 @@ float cobrar2(queue<ClienteDomicilio> *colaClientes2, float pago) {
             //Asignar el cliente que se encuentra al frente de la cola a la variable cliente
             ClienteDomicilio cliente2 = colaClientes2->front();
 
-            cout << "Factura de " << cliente2.apellido << "\t" << endl;
+            cout << "Factura de " << cliente2.nombre << "\t" << endl;
             cout << "Dui: " << cliente2.dui << "\t" << endl;
             cout << "Dirección: " << cliente2.direccion << "\t" << endl;
             //Recorrer la lista de los productos del cliente actuales con un for
@@ -137,7 +137,7 @@ float cobrar2(queue<ClienteDomicilio> *colaClientes2, float pago) {
                 //Almacenar los valores de precio del producto en la posición i en la variable pago
                 pago += cliente2.productos2.at(i).precio_unitario;
 
-                cout << cliente2.productos2.at(i).apellido << ": $" << cliente2.productos2.at(i).precio_unitario << endl;
+                cout << cliente2.productos2.at(i).nombre << ": $" << cliente2.productos2.at(i).precio_unitario << endl;
             }
 
             //Eliminar el cliente al frente de la cola porque ya fue atendido, y avanzar en la cola
@@ -221,22 +221,22 @@ int main() {
         ClienteEnvio cliente3;
 
         //Creando e inicializando una nueva lista de productos para compras en Local
-        vector<ProductoL> listaProducto;
+        vector<ProLocal> listaProducto;
         
         //Creando e inicializando una nueva lista de productos para Domicilio
-        vector<ProductoD> listaProducto2;
+        vector<ProDomicilio> listaProducto2;
         
         //Creando e inicializando una nueva lista de productos para Envio
-        vector<ProductoE> listaProducto3;
+        vector<ProEnvio> listaProducto3;
 
         //Creando una nueva variable producto en el Local
-        ProductoL producto;
+        ProLocal producto;
         
         //Creando una nueva variable producto a Domicilio
-        ProductoD producto2;
+        ProDomicilio producto2;
         
         //Creando una nueva variable producto de Envios
-        ProductoE producto3;
+        ProEnvio producto3;
 
         //Creando variable string para el nombre del producto a borrar
         string nombre;
@@ -249,7 +249,7 @@ int main() {
         //Case para verificar la opción ingresada
         switch (option){
             case 1:
-                cout << "¿Desea comprar en el Local o a Domicilio o Enviar un producto?" << endl;
+                cout << "¿Desea comprar en  Local, Domicilio o Enviar un producto?" << endl;
                 cout << "Para Local ingresar 1" << endl;
                 cout << "Para Domicilio ingresar 2" << endl;
                 cout << "Para Envio ingresar 3" << endl;
@@ -260,17 +260,45 @@ int main() {
                 cin >> option3;
                 cin.ignore();
                 
-                if (option3 == 1){    
-                //Pidiéndole al usuario que ingrese los datos del clientes
-                cout << "Ingrese el nombre del cliente" << endl;
-                getline(cin, cliente.nombre);
+                switch (option3){    
+                
+                case 1:
+                    //Pidiéndole al usuario que ingrese los datos del clientes local
+                    cout << "Ingrese el nombre del cliente" << endl;
+                    getline(cin, cliente.nombre);
 
-                cout << "Ingrese el dui del cliente" << endl;
-                cin >> cliente.dui;
-                } else {
-                //Pidiéndole al usuario que ingrese los datos del clientes
-                cout << "Ingrese el apellido del cliente" << endl;
-                getline(cin, cliente2.apellido);
+                    cout << "Ingrese el dui del cliente" << endl;
+                    cin >> cliente.dui;
+                
+                break;
+               
+               case 2:
+                    //Pidiéndole al usuario que ingrese los datos del clientes a domicilio
+                    cout << "Ingrese el nombre del cliente" << endl;
+                    getline(cin, cliente2.nombre);
+                
+                    cout << "Ingrese el dui del cliente" << endl;
+                    cin >> cliente2.dui;
+                
+                    cout << "Ingrese el nombre del cliente" << endl;
+                    getline(cin, cliente2.direccion);
+                break;
+                
+               case 3: 
+                    //Pidiéndole al usuario que ingrese los datos del clientes para envios
+                    cout << "Ingrese el nombre del cliente" << endl;
+                    getline(cin, cliente3.nombre);
+                    
+                    cout << "Ingrese el dui del cliente" << endl;
+                    cin >> cliente3.dui;
+                
+                    cout << "Ingrese el nombre del cliente" << endl;
+                    getline(cin, cliente3.pais);
+                break;
+                
+                default:
+                    cout << "Opción no válida" << endl;
+                break;
                 }
                 
                 status2 = true;
@@ -338,7 +366,7 @@ int main() {
                             getline(cin, producto3.pais);
                       
                             cout << "Ingrese el precio del producto" << endl;
-                            cin >> producto3.precio_unitario;
+                            cin >> producto3.precio_producto;
 
                             //Agregando un producto a la lista
                             listaProducto3.push_back(producto3);
@@ -368,7 +396,7 @@ int main() {
                 cliente.productos = listaProducto;
 
                 //Agregando el cliente a la cola
-                colaClientesL.push(cliente);
+                colaClientes.push(cliente);
 
                 //Borrando la lista de productos, para reutilizarla para el siguiente cliente
                 listaProducto.clear();
@@ -378,7 +406,7 @@ int main() {
                 cliente2.productos2 = listaProducto2;
 
                 //Agregando el cliente a la cola
-                colaClientesD.push(cliente2);
+                colaClientes2.push(cliente2);
 
                 //Borrando la lista de productos, para reutilizarla para el siguiente cliente
                 listaProducto2.clear();
@@ -387,7 +415,7 @@ int main() {
                 cliente3.productos3 = listaProducto3;
 
                 //Agregando el cliente a la cola
-                colaClientesE.push(cliente3);
+                colaClientes3.push(cliente3);
 
                 //Borrando la lista de productos, para reutilizarla para el siguiente cliente
                 listaProducto3.clear();
@@ -396,21 +424,21 @@ int main() {
             case 2:
                 //Caso en el que se le cobra a los clientes que hay en cola
 
-                totalPagadoLocal = cobrar(&colaClientesL, 0);
+                totalPagadoLocal = cobrar(&colaClientes, 0);
 
                 cout << "Se ha cobrado un total de $" << totalPagadoLocal << " a los clientes" << endl;
                 break;
             case 3:
                 //Caso en el que se le cobra a los clientes que hay en cola
 
-                totalPagadoDomicilio = cobrar2(&colaClientesD, 0);
+                totalPagadoDomicilio = cobrar2(&colaClientes2, 0);
 
                 cout << "Se ha cobrado un total de $" << totalPagadoDomicilio << " a los clientes" << endl;
                 break;
             case 4:
                 //Caso en el que se le cobra a los clientes que hay en cola
 
-                totalPagadoEnvio = cobrar3(&colaClientesE, 0);
+                totalPagadoEnvio = cobrar3(&colaClientes3, 0);
 
                 cout << "Se ha cobrado un total de $" << totalPagadoEnvio << " a los clientes" << endl;
                 break;
