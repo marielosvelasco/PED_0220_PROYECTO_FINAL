@@ -293,27 +293,28 @@ int main() {
 
                             cout << "Ingrese el precio del producto" << endl;
                             cin >> producto.precio;
-
+                            cin.ignore();
                             //Agregando un producto a la lista
                             listaProducto.push_back(producto);
                             break;
                             
                         case 2:
                             //Caso en el que se ingresa un nuevo producto para Domicilio
-                            cout << "Ingrese el nombre del cliente" << endl;
+                            cout << "\n" << "Ingrese el nombre del cliente" << endl;
                             getline(cin, cliente2.nombre);
                 
                             cout << "Ingrese el dui del cliente" << endl;
                             cin >> cliente2.dui;
-                
-                            cout << "Ingrese el nombre del cliente" << endl;
+                            cin.ignore();
+                            
+                            cout << "Ingrese la dirección del cliente" << endl;
                             getline(cin, cliente2.direccion);
-                            cin.ignore(); 
+                        
                             
                             //Pidiéndole al usuario los datos para un producto
                             cout << "Ingrese el nombre del producto" << endl;
                             getline(cin, producto2.nombre);
-                            cin.ignore();
+                            
                             //cout << "Ingrese su dirección:" << endl;
                             //getline(cin, producto2.direccion);
                             
@@ -326,13 +327,14 @@ int main() {
                             
                         case 3:
                             //Caso en el que se ingresa un nuevo producto para Envio
-                            cout << "Ingrese el nombre del cliente" << endl;
+                            cout << "\n"  << "Ingrese el nombre del cliente" << endl;
                             getline(cin, cliente3.nombre);
                     
                             cout << "Ingrese el dui del cliente" << endl;
                             cin >> cliente3.dui;
-                
-                            cout << "Ingrese el nombre del cliente" << endl;
+                            cin.ignore();
+                            
+                            cout << "Ingrese el país del cliente" << endl;
                             getline(cin, cliente3.pais);
                             
                             //Pidiéndole al usuario los datos para un producto
