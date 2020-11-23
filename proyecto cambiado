@@ -1,434 +1,58 @@
 //PROYECTO FINAL
-//LUIS ERNESTO ARBIZÚ MENA           CARNÉ  00206119
-//MARIELOS EUGENIA VELASCO PANIAGUA  CARNÉ  00230019
-//KARLA MARCELA PORTILLO RAMÍREZ     CARNÉ  00079419
+//LUIS ERNESTO ARBIZÚ MENA           CARNÉ 00206119
+//MARIELOS EUGENIA VELASCO PANIAGUA  CARNÉ 00230019
+//KARLA MARCELA PORTILLO RAMÍREZ     CARNÉ 00079419
 
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <regex>
 using namespace std;
 
 //Producto en Local
-struct ProLocal {
-    string nombre;
-    //string tipo;
-    float precio;
-};
-
-//Producto a Domicilio
-struct ProDomicilio {
-    string nombre;
-    //int dui;
-    //string direccion;
-    //string tipo;
-    float precio_unitario;
-};
-
-//Producto en Envio
-struct ProEnvio {
-    string nombre;
-    //int dui;
-    //string pais;
-    //string tipo;
-    float precio_producto;
+struct Producto {
+  string nombre;
+  float precio;
 };
 
 //Definiendo estructura Cliente en Local
-struct ClienteLocal {
+struct Cliente {
     string nombre;
+	string direccion;
     int dui;
-    vector<ProLocal> productos;
+    vector<Producto> productos;
+	string pais = "El Salvador";
 };
 
-
-//Definiendo estructura Cliente a Domicilio
-struct ClienteDomicilio {
-    string nombre;
-    int dui;
-    string direccion;
-    vector<ProDomicilio> productos2;
-};
-
-//Definiendo estructura Cliente por Envio
-struct ClienteEnvio {
-    string nombre;
-    int dui;
-    string pais;
-    vector<ProEnvio> productos3;
-};
-
-//Función para borrar un producto por su nombre
-void borrarPorNombre(vector<ProLocal> *listaProductos, string name) {
-    //Bandera booleana para verificar si se ha encontrado el producto
-    bool encontrado = false;
-
-    //Verificación de que la lista de productos esté vacía o no
-    if(listaProductos->empty()) {
-        cout << "No hay productos en la lista" << endl;
-        return;
-    }else {
-        //Recorrer la lista por medio de un for
-        for (int pos = 0; pos < listaProductos->size(); pos++) {
-            //Verificar nombre y el string recibido como parámetro
-            if(listaProductos->at(pos).nombre == name) {
-                //Se modifica la bandera encontrado a verdadero
-                encontrado = true;
-
-                //Se manda a llamar la función borrar, desde el primer elemento existente hasta el actual
-                listaProductos->erase(listaProductos->begin()+pos);
-
-                cout << "Se borr"<<char(162)<<" el producto correctamente" << endl;
-                break;
-            }
-        }
-
-        //Verificando que no exista el producto en la lista
-        if(encontrado == false) {
-            cout << "No hay producto" << endl;
-        }
-    }
+string validarString(string mensaje){
+	string input;
+  while(true){
+		cout << mensaje;
+ 		getline(cin, input);
+		if(regex_match (input, regex("^[a-zA-Z ]*$") )){
+			return input;
+		}
+	}
 }
 
-//Función para cobrarle a los clientes en el Local
-float cobrar(queue<ClienteLocal> *colaClientes, float pago) {
-    //Verificación que haya clientes en la cola
-    if(colaClientes->empty()) {
-        cout << "No se ha realizado ning"<<char(163)<<"n cobro, no hay clientes en cola del local." << endl;
-        return 0;
-    }else {
-        //Recorrer la cola por medio de un while, cuya condición sea que la cola NO esté vacía
-        while(!colaClientes->empty()) {
-            //Asignar el cliente que se encuentra al frente de la cola a la variable cliente
-            ClienteLocal cliente = colaClientes->front();
-
-            cout << "Factura de " << cliente.nombre << "\t" << "\t" << "DUI: " << cliente.dui << endl;
-            //Recorrer la lista de los productos del cliente actuales con un for
-            for(int i = 0; i < cliente.productos.size(); i++) {
-                //Almacenar los valores de precio del producto en la posición i en la variable pago
-                pago += cliente.productos.at(i).precio;
-
-                cout << cliente.productos.at(i).nombre << ": $" << cliente.productos.at(i).precio << endl;
-            }
-
-            //Eliminar el cliente al frente de la cola 
-            colaClientes->pop();
-        }
-        return pago;
-    }
+float validarPrecio(){
+	string input;
+  while(true){
+		cout << "Ingrese el precio del producto: (no se admiten letras)";
+ 		cin >> input;
+		if(regex_match (input, regex("[+-]?([0-9]*[.])?[0-9]+") )){
+			return atof(&input[0]);
+		}
+	}
 }
 
-//Función para cobrarle a los clientes a Domicilio
-float cobrar2(queue<ClienteDomicilio> *colaClientes2, float pago) {
-    //Verificación que haya clientes en la cola
-    if(colaClientes2->empty()) {
-        cout << "No se ha realizado ning"<<char(163)<<"n cobro, no hay clientes para domicilio" << endl;
-        return 0;
-    }else {
-        //Recorrer la cola por medio de un while, cuya condición sea que la cola NO esté vacía
-        while(!colaClientes2->empty()) {
-            //Asignar el cliente que se encuentra al frente de la cola a la variable cliente
-            ClienteDomicilio cliente2 = colaClientes2->front();
-
-            cout << "Factura de " << cliente2.nombre << "\t" << endl;
-            cout << "Dui: " << cliente2.dui << "\t" << endl;
-            cout << "Direcci"<<char(162)<<"n: " << cliente2.direccion << "\t" << endl;
-            //Recorrer la lista de los productos del cliente actuales con un for
-            for(int i = 0; i < cliente2.productos2.size(); i++) {
-                //Almacenar los valores de precio del producto en la posición i en la variable pago
-                pago += cliente2.productos2.at(i).precio_unitario;
-
-                cout << cliente2.productos2.at(i).nombre << ": $" << cliente2.productos2.at(i).precio_unitario << endl;
-            }
-
-            //Eliminar el cliente al frente de la cola porque ya fue atendido, y avanzar en la cola
-            colaClientes2->pop();
-        }
-        return pago;
-    }
-}
-
-//Función para cobrarle a los clientes por Envio
-float cobrar3(queue<ClienteEnvio> *colaClientes3, float pago) {
-    //Verificación que haya clientes en la cola
-    if(colaClientes3->empty()) {
-        cout << "No se ha realizado ning"<<char(163)<<"n cobro, no hay clientes para env"<<char(161)<<"o" << endl;
-        return 0;
-    }else {
-        //Recorrer la cola por medio de un while, cuya condición sea que la cola NO esté vacía
-        while(!colaClientes3->empty()) {
-            //Asignar el cliente que se encuentra al frente de la cola a la variable cliente
-            ClienteEnvio cliente3 = colaClientes3->front();
-
-            cout << "Factura de " << cliente3.nombre << "\t" << endl;
-            cout << "Dui: " << cliente3.dui << "\t" << endl;
-            cout << "Pa"<<char(161)<<"s de envio: " << cliente3.pais << "\t" << endl;
-            //Recorrer la lista de los productos del cliente actuales con un for
-            for(int i = 0; i < cliente3.productos3.size(); i++) {
-                //Almacenar los valores de precio del producto en la posición i en la variable pago
-                pago += cliente3.productos3.at(i).precio_producto;
-
-                cout << cliente3.productos3.at(i).nombre << ": $" << cliente3.productos3.at(i).precio_producto << endl;
-            }
-
-            //Eliminar el cliente al frente de la cola porque ya fue atendido, y avanzar en la cola
-            colaClientes3->pop();
-        }
-        return pago;
-    }
-}
-
-int main() {
-    //Creando e inicializando la cola de clientes Local
-    queue<ClienteLocal> colaClientes;
-
-    //Creando e inicializando la cola de clientes a Domicilio
-    queue<ClienteDomicilio> colaClientes2;
-    
-    //Creando e inicializando la cola de clientes por Envio
-    queue<ClienteEnvio> colaClientes3;
-    
-    //Creando bandera booleana para iterar el while
-    bool status = true;
-
-    //Creando bandera booleana para iterar el segundo while
-    bool status2 = true;
-    
-    //Creando bandera booleana para iterar el segundo while
-    bool status3 = true;
-
-    //Menu por medio de while, verificando variable status por cada iteración
-    while(status) {
-        //Imprimiendo en consola las opciones del menú
-        cout << "********** MENU **********" << endl;
-        cout << "1. Atender pedidos" << endl;
-        cout << "2. Calcular ganancias por ventas en el Local" << endl;
-        cout << "3. Calcular ganancias por ventas a Domicilio" << endl;
-        cout << "4. Calcular ganancias por ventas de Envios" << endl;
-        cout << "5. Salir del programa" << endl;
-
-        //Creación de variable entera que servirá para ejecutar una opción del menú
-        int option;
-
-        //Pidiéndole al usuario que ingrese la opción por medio de consola
-        cout << "\n" << "Ingrese la opci"<<char(162)<<"n del men"<<char(163)<<" que desea ejecutar: ";
-        cin >> option;
-        cin.ignore();
-
-        //Creación de variable tipo cliente en el Local
-        ClienteLocal cliente;
-        
-        //Creación de variable tipo cliente a Domicilio
-        ClienteDomicilio cliente2;
-        
-         //Creación de variable tipo cliente en Envio
-        ClienteEnvio cliente3;
-
-        //Creando e inicializando una nueva lista de productos para compras en Local
-        vector<ProLocal> listaProducto;
-        
-        //Creando e inicializando una nueva lista de productos para Domicilio
-        vector<ProDomicilio> listaProducto2;
-        
-        //Creando e inicializando una nueva lista de productos para Envio
-        vector<ProEnvio> listaProducto3;
-
-        //Creando una nueva variable producto en el Local
-        ProLocal producto;
-        
-        //Creando una nueva variable producto a Domicilio
-        ProDomicilio producto2;
-        
-        //Creando una nueva variable producto de Envios
-        ProEnvio producto3;
-
-        //Creando variable string para el nombre del producto a borrar
-        string nombre;
-
-        //Creación de variable entera para la sumatoria de los precios de los productos
-        float totalPagadoLocal = 0;
-        float totalPagadoDomicilio = 0;
-        float totalPagadoEnvio = 0;
-
-        //Case para verificar la opción ingresada
-        
-        switch (option){
-            case 1:
-                
-                
-                status2 = true;
-                //While ocupado para la inserción o eliminación de productos en la lista del cliente
-                while(status2) {
-                    //Menú secundario para ingresar productos o eliminar
-                    cout <<"\n" << "*** Productos del cliente ***" << endl;
-                    cout << "1. Agregar en lista para compras en Local" << endl;
-                    cout << "2. Agregar en lista para compras a Domicilio" << endl;
-                    cout << "3. Agregar en lista para compras Envio" << endl;
-                    cout << "4. Eliminar producto por nombre" << endl;
-                    cout << "5. Finalizar listado de productos" << endl;
-                 
-                    //Declaración de variable para ingresar opción en el segundo menú
-                    int option2;
-
-                    //Pidiéndole al usuario que ingrese la opción a ejecutar del menú
-                     cout << "\n" << "Ingrese la opci"<<char(162)<<"n del men"<<char(163)<<" que desea ejecutar: ";
-                    cin >> option2;
-                    cin.ignore();
-
-                    switch(option2) {
-                        case 1:
-                            //Caso en el que se ingresa un nuevo producto y cliente
-                            cout << "\n" <<"Ingrese el nombre del cliente" << endl;
-                            getline(cin, cliente.nombre);
-
-                            cout << "Ingrese el dui del cliente" << endl;
-                            cin >> cliente.dui;
-                            cin.ignore();
-                            //Pidiéndole al usuario los datos para un producto
-                            cout << "Ingrese el nombre del producto" << endl;
-                            getline(cin, producto.nombre);
-                          
-
-                            //cout << "Ingrese el tipo de producto" << endl;
-                            //getline(cin, producto.tipo);
-
-                            cout << "Ingrese el precio del producto" << endl;
-                            cin >> producto.precio;
-                            cin.ignore();
-                            //Agregando un producto a la lista
-                            listaProducto.push_back(producto);
-                            break;
-                            
-                        case 2:
-                            //Caso en el que se ingresa un nuevo producto para Domicilio
-                            cout << "\n" << "Ingrese el nombre del cliente" << endl;
-                            getline(cin, cliente2.nombre);
-                
-                            cout << "Ingrese el dui del cliente" << endl;
-                            cin >> cliente2.dui;
-                            cin.ignore();
-                            
-                            cout << "Ingrese la direcci"<<char(162)<<"n del cliente" << endl;
-                            getline(cin, cliente2.direccion);
-                        
-                            
-                            //Pidiéndole al usuario los datos para un producto
-                            cout << "Ingrese el nombre del producto" << endl;
-                            getline(cin, producto2.nombre);
-                            
-                            //cout << "Ingrese su dirección:" << endl;
-                            //getline(cin, producto2.direccion);
-                            
-                            cout << "Ingrese el precio del producto" << endl;
-                            cin >> producto2.precio_unitario;
-
-                            //Agregando un producto a la lista
-                            listaProducto2.push_back(producto2);
-                            break;    
-                            
-                        case 3:
-                            //Caso en el que se ingresa un nuevo producto para Envio
-                            cout << "\n"  << "Ingrese el nombre del cliente" << endl;
-                            getline(cin, cliente3.nombre);
-                    
-                            cout << "Ingrese el dui del cliente" << endl;
-                            cin >> cliente3.dui;
-                            cin.ignore();
-                            
-                            cout << "Ingrese el pa"<<char(161)<<"s del cliente" << endl;
-                            getline(cin, cliente3.pais);
-                            
-                            //Pidiéndole al usuario los datos para un producto
-                            cout << "Ingrese el nombre del producto" << endl;
-                            getline(cin, producto3.nombre);
-
-                            //cout << "Ingrese el país de destino:" << endl;
-                            //getline(cin, producto3.pais);
-                      
-                            cout << "Ingrese el precio del producto" << endl;
-                            cin >> producto3.precio_producto;
-
-                            //Agregando un producto a la lista
-                            listaProducto3.push_back(producto3);
-                            break;    
-                            
-                        case 4:
-                            //Caso en el que se borra un producto por su nombre
-
-                            //Pidiéndole al usuario el nombre del producto que desea borrar
-                            cout << "Ingrese el nombre del producto que desea borrar" << endl;
-                            getline(cin, nombre);
-
-                            //Mandar a llamar a la función para borrar por el nombre
-                            borrarPorNombre(&listaProducto, nombre);
-                            break;
-                         
-                        case 5:
-                            status2 = false;
-                            break;
-                        default:
-                            cout << "Opci"<<char(162)<<"n no v"<<char(160)<<"lida" << endl;
-                            break;
-                    }
-                }
-
-                //Agregando la lista de productos al cliente
-                cliente.productos = listaProducto;
-
-                //Agregando el cliente a la cola
-                colaClientes.push(cliente);
-
-                //Borrando la lista de productos, para reutilizarla para el siguiente cliente
-                listaProducto.clear();
-                
-                
-                //Agregando la lista de productos al cliente
-                cliente2.productos2 = listaProducto2;
-
-                //Agregando el cliente a la cola
-                colaClientes2.push(cliente2);
-
-                //Borrando la lista de productos, para reutilizarla para el siguiente cliente
-                listaProducto2.clear();
-                
-                //Agregando la lista de productos al cliente
-                cliente3.productos3 = listaProducto3;
-
-                //Agregando el cliente a la cola
-                colaClientes3.push(cliente3);
-
-                //Borrando la lista de productos, para reutilizarla para el siguiente cliente
-                listaProducto3.clear();
-                break;
-            
-            case 2:
-                //Caso en el que se le cobra a los clientes que hay en cola
-
-                totalPagadoLocal = cobrar(&colaClientes, 0);
-
-                cout << "Se ha cobrado un total de $" << totalPagadoLocal << " a los clientes" << endl;
-                break;
-            case 3:
-                //Caso en el que se le cobra a los clientes que hay en cola
-
-                totalPagadoDomicilio = cobrar2(&colaClientes2, 0);
-
-                cout << "Se ha cobrado un total de $" << totalPagadoDomicilio << " a los clientes" << endl;
-                break;
-            case 4:
-                //Caso en el que se le cobra a los clientes que hay en cola
-
-                totalPagadoEnvio = cobrar3(&colaClientes3, 0);
-
-                cout << "Se ha cobrado un total de $" << totalPagadoEnvio << " a los clientes" << endl;
-                break;
-            case 5:
-                status = false;
-                cout << "Fin del programa." << endl;
-                break;
-            default:
-                cout << "Opci"<<char(162)<<"n no v"<<char(160)<<"lida" << endl;
-                break;
-        }
-    }
-    return 0;
+int validarEnteros(string mensaje){
+	string input;
+  while(true){
+		cout << mensaje;
+ 		cin >> input;
+		if(regex_match (input, regex("^[0-9]*$") )){
+			return atoi(&input[0]);
+		}
+	}
 }
