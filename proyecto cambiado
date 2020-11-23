@@ -38,7 +38,7 @@ string validarString(string mensaje){
 float validarPrecio(){
 	string input;
   while(true){
-		cout << "Ingrese el precio del producto: (no se admiten letras)";
+		cout << "Ingrese el precio del producto: ";
  		cin >> input;
 		if(regex_match (input, regex("[+-]?([0-9]*[.])?[0-9]+") )){
 			return atof(&input[0]);
@@ -56,6 +56,7 @@ int validarEnteros(string mensaje){
 		}
 	}
 }
+
 
 //Función para borrar un producto por su nombre
 void borrarPorNombre(vector<Producto> *listaProductos, string name) {
@@ -165,6 +166,7 @@ void menuCompras(vector<Producto> *listaProductos){
         }
 	}while(option != 3);
 }
+
 int main() {
     //Creando e inicializando la cola de clientes Local
     queue<Cliente> colaLocal;
@@ -174,9 +176,9 @@ int main() {
     queue<Cliente> colaEnvio;
     
 	int option;
-    //Menu por medio de while, verificando variable status por cada iteraciÃ³n
+    //Menu por medio de while, verificando variable status por cada iteración
     do{
-        //Imprimiendo en consola las opciones del menÃº
+        //Imprimiendo en consola las opciones del menú
         cout << "********** MENU **********" << endl;
         cout << "1. Atender pedidos" << endl;
         cout << "2. Calcular ganancias por ventas en el Local" << endl;
@@ -184,9 +186,9 @@ int main() {
         cout << "4. Calcular ganancias por ventas de Envios" << endl;
         cout << "5. Salir del programa" << endl;
 
-        //CreaciÃ³n de variable entera que servirÃ¡ para ejecutar una opciÃ³n del menÃº
+        //Creación de variable entera que servirá para ejecutar una opción del menú
         
-        //PidiÃ©ndole al usuario que ingrese la opciÃ³n por medio de consola
+        //Pidiéndole al usuario que ingrese la opción por medio de consola
         option = validarEnteros("\nIngrese la opcion del menu que desea ejecutar: ");
         cin.ignore();
 
@@ -204,18 +206,18 @@ int main() {
         switch (option){
             case 1:
 							cliente = clienteAux;
-				//DeclaraciÃ³n de variable para ingresar opciÃ³n en el segundo menÃº
+				//Declaración de variable para ingresar opción en el segundo menú
                 int option2;
-                //While ocupado para la inserciÃ³n o eliminaciÃ³n de productos en la lista del cliente
+                //While ocupado para la inserción o eliminación de productos en la lista del cliente
                 do{
-                    //MenÃº secundario para ingresar productos o eliminar
+                    //Menú secundario para ingresar productos o eliminar
                     cout <<"\n" << "*** TIPO DE ENVIO ***" << endl;
                     cout << "1. Local" << endl;
                     cout << "2. Domicilio" << endl;
                     cout << "3. Envio" << endl;
                     cout << "4. Regresar" << endl;
                  
-                    //PidiÃ©ndole al usuario que ingrese la opciÃ³n a ejecutar del menÃº
+                    //Pidiéndole al usuario que ingrese la opción a ejecutar del menú
                     option2 = validarEnteros("\nIngrese la opcion del menu que desea ejecutar: ");
                     cin.ignore();
 
