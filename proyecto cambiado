@@ -56,3 +56,100 @@ int validarEnteros(string mensaje){
 		}
 	}
 }
+
+ndera encontrado a verdadero
+                //Se manda a llamar la función borrar, desde el primer elemento existente hasta el actual
+                listaProductos->erase(listaProductos->begin()+pos);
+                cout << "Se borró"<<char(162)<<" el producto correctamente" << endl;
+                return;
+            }
+        }
+		cout << "No se encontró el producto" << endl;
+    }
+}
+
+//Función para cobrarle a los clientes en el Local
+void cobrar(queue<Cliente> *colaClientes, float pago) {
+    //Verificación que haya clientes en la cola
+    if(colaClientes->empty()) {
+        cout << "No se ha realizado ning"<<char(163)<<"n cobro, no hay clientes en cola del local." << endl;
+    }else {
+        //Recorrer la cola por medio de un while, cuya condición sea que la cola NO está vacía
+        while(!colaClientes->empty()) {
+            //Asignar el cliente que se encuentra al frente de la cola a la variable cliente
+            Cliente cliente = colaClientes->front();
+            cout << "Factura de " << cliente.nombre << "\t" << "\t" << "DUI: " << cliente.dui << endl;
+			cout << "Pais: " << cliente.pais << endl;
+            //Recorrer la lista de los productos del cliente actuales con un for
+            for(int i = 0; i < cliente.productos.size(); i++) {
+                //Almacenar los valores de precio del producto en la posición i en la variable pago
+                pago += cliente.productos.at(i).precio;
+				cout << cliente.productos.at(i).nombre << ": $" << cliente.productos.at(i).precio << endl;
+            }
+            //Eliminar el cliente al frente de la cola 
+            colaClientes->pop();
+        }
+    }
+	cout << "Se ha cobrado un total de $" << pago << " a los clientes" << endl;
+}
+
+void agregarProducto(vector<Producto> *listaProducto){
+	Producto producto;
+
+  //Pidiéndole al usuario los datos para un producto
+  producto.nombre = validarString("Ingrese el nombre del producto: ");
+  producto.precio = validarPrecio();
+
+  cin.ignore();
+  //Agregando un producto a la lista
+  listaProducto->push_back(producto);
+}
+
+void pedirDatosCliente(Cliente *cliente, bool domicilio, bool exterior){
+  cliente->nombre = validarString("\nIngrese el nombre del cliente: ");
+	cliente->dui = validarEnteros("\nIngrse el dui del cliente: ");
+  cin.ignore();
+
+	if(domicilio){
+		cout << "Ingrese la direccion: " << endl;
+		getline(cin, cliente->direccion);
+		if(exterior){
+			cliente->pais = validarString("Ingrese el pais: ");
+		}
+	}
+}
+
+void menuCompras(vector<Producto> *listaProductos){
+	//Declaración de variable para ingresar opción en el segundo menú
+	int option;
+	string nombre;
+	//While ocupado para la inserciónn o eliminación de productos en la lista del cliente
+	do{
+        //Men� secundario para ingresar productos o eliminar
+        cout <<"\n" << "*** Productos del cliente ***" << endl;
+        cout << "1. Agregar en lista para compras" << endl;
+        cout << "2. Eliminar producto por nombre" << endl;
+        cout << "3. Finalizar listado de productos" << endl;
+    
+ 
+        //Pidiéndole al usuario que ingrese la opción a ejecturar del menú
+        option = validarEnteros("\nIngrese la opcion del menu que desea ejecutar: ");
+        cin.ignore();
+
+        switch(option) {
+            case 1:
+                //Caso en el que se ingresa un nuevo producto para Local
+                agregarProducto(listaProductos);
+                break;
+            case 2:
+                //Caso en el que se borra un producto por su nombre
+                //Pidiéndole al usuario el nombre del producto que desea borrar
+                nombre = validarString("Ingrese el nombre del producto que desea borrar: ");
+                //Mandar a llamar a la función para borrar por el nombre
+                borrarPorNombre(listaProductos, nombre);
+                break;
+            case 3: break;
+            default: cout << "Opci"<<char(162)<<"n no v"<<char(160)<<"lida" << endl; break;
+        }
+	}while(option != 3);
+}
