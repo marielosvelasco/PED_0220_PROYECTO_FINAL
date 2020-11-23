@@ -165,3 +165,102 @@ void menuCompras(vector<Producto> *listaProductos){
         }
 	}while(option != 3);
 }
+int main() {
+    //Creando e inicializando la cola de clientes Local
+    queue<Cliente> colaLocal;
+    //Creando e inicializando la cola de clientes a Domicilio
+    queue<Cliente> colaDomicilio;
+    //Creando e inicializando la cola de clientes por Envio
+    queue<Cliente> colaEnvio;
+    
+	int option;
+    //Menu por medio de while, verificando variable status por cada iteraciÃ³n
+    do{
+        //Imprimiendo en consola las opciones del menÃº
+        cout << "********** MENU **********" << endl;
+        cout << "1. Atender pedidos" << endl;
+        cout << "2. Calcular ganancias por ventas en el Local" << endl;
+        cout << "3. Calcular ganancias por ventas a Domicilio" << endl;
+        cout << "4. Calcular ganancias por ventas de Envios" << endl;
+        cout << "5. Salir del programa" << endl;
+
+        //CreaciÃ³n de variable entera que servirÃ¡ para ejecutar una opciÃ³n del menÃº
+        
+        //PidiÃ©ndole al usuario que ingrese la opciÃ³n por medio de consola
+        option = validarEnteros("\nIngrese la opcion del menu que desea ejecutar: ");
+        cin.ignore();
+
+        //Creando e inicializando una nueva lista de productos para compras en Local
+        vector<Producto> listaLocal;
+        
+        //Creando e inicializando una nueva lista de productos para Domicilio
+        vector<Producto> listaDomicilio;
+        
+        //Creando e inicializando una nueva lista de productos para Envio
+        vector<Producto> listaEnvio;
+
+				Cliente cliente, clienteAux;
+        
+        switch (option){
+            case 1:
+							cliente = clienteAux;
+				//DeclaraciÃ³n de variable para ingresar opciÃ³n en el segundo menÃº
+                int option2;
+                //While ocupado para la inserciÃ³n o eliminaciÃ³n de productos en la lista del cliente
+                do{
+                    //MenÃº secundario para ingresar productos o eliminar
+                    cout <<"\n" << "*** TIPO DE ENVIO ***" << endl;
+                    cout << "1. Local" << endl;
+                    cout << "2. Domicilio" << endl;
+                    cout << "3. Envio" << endl;
+                    cout << "4. Regresar" << endl;
+                 
+                    //PidiÃ©ndole al usuario que ingrese la opciÃ³n a ejecutar del menÃº
+                    option2 = validarEnteros("\nIngrese la opcion del menu que desea ejecutar: ");
+                    cin.ignore();
+
+                    switch(option2) {
+                        case 1:
+                            //Caso en el que se ingresa un nuevo producto para Local
+							pedirDatosCliente(&cliente, false, false);
+                            menuCompras(&listaLocal);
+							cliente.productos = listaLocal;
+							colaLocal.push(cliente);
+                            break;
+                        case 2:
+                            //Caso en el que se ingresa un nuevo producto para Domicilio
+							pedirDatosCliente(&cliente, true, false);
+                            menuCompras(&listaDomicilio);
+							cliente.productos = listaDomicilio;
+							colaDomicilio.push(cliente);
+                            break;    
+                        case 3:
+                            //Caso en el que se ingresa un nuevo producto para Envio
+							pedirDatosCliente(&cliente, true, true);
+                            menuCompras(&listaEnvio);
+							cliente.productos = listaEnvio;
+							colaEnvio.push(cliente);
+                            break;    
+                        case 4: break;
+                        default: cout << "Opci"<<char(162)<<"n no v"<<char(160)<<"lida" << endl; break;
+                    }
+                }while(option2 != 4);
+                break;
+            case 2:
+                //Caso en el que se le cobra a los clientes que hay en cola
+                cobrar(&colaLocal, 0);
+                break;
+            case 3:
+                //Caso en el que se le cobra a los clientes que hay en cola
+                cobrar(&colaDomicilio, 0);
+                break;
+            case 4:
+                //Caso en el que se le cobra a los clientes que hay en cola
+                cobrar(&colaEnvio, 0);
+                break;
+            case 5: cout << "Fin del programa." << endl; break;
+            default: cout << "Opci"<<char(162)<<"n no v"<<char(160)<<"lida" << endl; break;
+        }
+    }while(option != 5);
+    return 0;
+}
