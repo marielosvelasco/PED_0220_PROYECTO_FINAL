@@ -57,7 +57,19 @@ int validarEnteros(string mensaje){
 	}
 }
 
-ndera encontrado a verdadero
+//Función para borrar un producto por su nombre
+void borrarPorNombre(vector<Producto> *listaProductos, string name) {
+
+    //Verificación de que la lista de productos está vacía o no
+    if(listaProductos->empty()) {
+        cout << "No hay productos en la lista" << endl;
+        return;
+    }else {
+        //Recorrer la lista por medio de un for
+        for (int pos = 0; pos < listaProductos->size(); pos++) {
+            //Verificar nombre y el string recibido como par�metro
+            if(listaProductos->at(pos).nombre == name) {
+                //Se modifica la bandera encontrado a verdadero
                 //Se manda a llamar la función borrar, desde el primer elemento existente hasta el actual
                 listaProductos->erase(listaProductos->begin()+pos);
                 cout << "Se borró"<<char(162)<<" el producto correctamente" << endl;
